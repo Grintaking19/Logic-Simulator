@@ -50,7 +50,7 @@ string Input::GetSrting(Output *pOut)
 		else str.push_back(ch);
 		
 		
-	} 
+	 } 
 	while (c!=Escape || c!=Enter);
 
 	return str;
