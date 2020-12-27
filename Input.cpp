@@ -1,5 +1,6 @@
-//#include "Input.h"
+#include "Input.h"
 #include "Output.h"
+#include <cstring>
 
 Input::Input(window* pW)
 {
@@ -11,16 +12,48 @@ void Input::GetPointClicked(int &x, int &y)
 	pWind->WaitMouseClick(x, y);	//Wait for mouse click
 }
 
+// This is the ASSCII value of 
+const char Enter = '\r';
+const char Escape = '\e';
+const char Backspace ='\b';
+
+
 string Input::GetSrting(Output *pOut)
 {
-	///TODO: Implement this Function
-	//Read a complete string from the user until the user presses "ENTER".
-	//If the user presses "ESCAPE". This function should return an empty string.
-	//"BACKSPACE" should be also supported
-	//User should see what he is typing at the status bar
+	
+	string str;
+	char ch;
+	pWind->FlushKeyQueue(); // we do this to overcome any miss clicks returned
+	do
+	{
+		pWind->WaitKeyPress(ch); // we waits any clicks pressed by user from the window
+		pOut->PrintMsg(str);  // here we display on the window as an Output the order or the message we want + the string we type 		
+		
+		if (ch == Backspace)
+		{
+			str.pop_back();
+		}
 
-	return NULL;
+		else if (ch == Escape)
+		{
+			if (!str.empty())
+			{
+				str.clear();
+			}
+		}
+
+		else if (ch == Enter)
+		{
+			return;
+		}
+		else str.push_back(ch);
+		
+		
+	} while (c!=Escape || c!=Enter);
+
+	return str;
 }
+
 
 //This function reads the position where the user clicks to determine the desired action
 ActionType Input::GetUserAction() const
