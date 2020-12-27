@@ -1,5 +1,7 @@
-//#include "Input.h"
+#include "Input.h"
 #include "Output.h"
+#include <cstring>
+
 
 Input::Input(window* pW)
 {
@@ -12,7 +14,7 @@ void Input::GetPointClicked(int &x, int &y)
 }
 
 // This is the ASSCII value of 
-const char Enter = '\n';
+const char Enter = '\r';
 const char Escape = '\e';
 const char Backspace ='\b';
 
@@ -20,13 +22,13 @@ const char Backspace ='\b';
 string Input::GetSrting(Output *pOut)
 {
 	
-	string str="";
+	string str;
 	char ch;
 	pWind->FlushKeyQueue(); // we do this to overcome any miss clicks returned
 	do
 	{
 		pWind->WaitKeyPress(ch); // we waits any clicks pressed by user from the window
-		pOut->PrintMsg(msg + " :" + str);  // here we display on the window as an Output the order or the message we want + the string we type 		
+		pOut->PrintMsg(str);  // here we display on the window as an Output the order or the message we want + the string we type 		
 		
 		if (ch == Backspace)
 		{
@@ -52,7 +54,7 @@ string Input::GetSrting(Output *pOut)
 	while (c!=Escape || c!=Enter);
 
 	return str;
- }
+  }
 
 
 
