@@ -52,7 +52,7 @@ string Input::GetSrting(Output *pOut)
 	while (c!=Escape || c!=Enter);
 
 	return str;
-}
+ }
 
 
 
